@@ -42,6 +42,8 @@ void CylinderWidget::initializeGL()
     glClearColor(0.0, 0.0, 0.0, 0.0); // black background
 
     initShaders();
+
+    m_geomEngine = std::make_unique<GeometryEngine>();
 }
 
 void CylinderWidget::paintGL()
@@ -55,6 +57,10 @@ void CylinderWidget::paintGL()
     // Enable back face culling
     glEnable(GL_CULL_FACE);
 
+    // Calculate model view transformation
+    QMatrix4x4 transformation;
+    transformation.rotate(QQuaternion::fromEulerAngles(m_rotationAngles));
+    m_geomEngine->drawCylinderGeometry(m_program, m_projection * transformation, m_cylinderTraits);
 }
 
 void CylinderWidget::resizeGL(int w, int h)

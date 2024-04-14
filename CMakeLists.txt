@@ -13,13 +13,17 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets OpenGL OpenGLWidgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGL OpenGLWidgets)
 
 set(PROJECT_HEADERS
+    cylinder_triangulation.h
     cylinder_widget.h
+    geometry_engine.h
     window.h
 )
 
 set(PROJECT_SOURCES
     main.cpp
+    cylinder_triangulation.cpp
     cylinder_widget.cpp
+    geometry_engine.cpp
     window.cpp
 )
 

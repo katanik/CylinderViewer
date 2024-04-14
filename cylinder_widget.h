@@ -45,10 +45,14 @@ private:
 
 private:
     QOpenGLShaderProgram m_program;
+    std::unique_ptr<GeometryEngine> m_geomEngine = nullptr;
+
+    CylinderTraits m_cylinderTraits;
 
     QVector3D m_rotationAngles;
     QVector2D m_lastPos;
 
+    QMatrix4x4 m_projection;
 };
 
 #endif // CYLINDER_WIDGET_H
