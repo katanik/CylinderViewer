@@ -13,11 +13,13 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets OpenGL OpenGLWidgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OpenGL OpenGLWidgets)
 
 set(PROJECT_HEADERS
+    cylinder_widget.h
     window.h
 )
 
 set(PROJECT_SOURCES
     main.cpp
+    cylinder_widget.cpp
     window.cpp
 )
 

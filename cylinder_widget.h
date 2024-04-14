@@ -5,6 +5,9 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 
+#include <QMatrix4x4>
+
+#include "geometry_engine.h"
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -37,9 +40,15 @@ signals:
     void yRotationChanged(int angle);
     void zRotationChanged(int angle);
 
+private:
+    void initShaders();
 
 private:
     QOpenGLShaderProgram m_program;
+
+    QVector3D m_rotationAngles;
+    QVector2D m_lastPos;
+
 };
 
 #endif // CYLINDER_WIDGET_H
