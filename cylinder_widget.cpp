@@ -65,6 +65,20 @@ void CylinderWidget::paintGL()
 
 void CylinderWidget::resizeGL(int w, int h)
 {
+    // Calculate aspect ratio
+    float aspectRatio = static_cast<float>(w) / static_cast<float>(h ? h : 1);
+
+    // Set near plane to 0.01, far plane to 100.0, field of view 45 degrees
+    constexpr float nearPlane = 0.01f, farPlane = 100.0, fov = 45.0;
+
+    // Reset projection
+    m_projection.setToIdentity();
+
+    // Set perspective projection
+    m_projection.perspective(fov, aspectRatio, nearPlane, farPlane);
+
+    // Move camera position
+    m_projection.translate(0, 0, -1);
 }
 
 void CylinderWidget::mousePressEvent(QMouseEvent *event)
