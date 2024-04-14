@@ -25,6 +25,7 @@ public:
 private:
     void addTopPlaneTriangle(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat z);
     void addBackPlaneTriangle(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat z);
+    void addCylinderSurfaceTriangles(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat z);
 
     void appendPoint(GLfloat x, GLfloat y, GLfloat z);
     void appendPoint(const QVector3D &coordinates);

@@ -19,6 +19,7 @@ CylinderTriangulation::CylinderTriangulation() {
 
         addTopPlaneTriangle(x1, y1, x2, y2, z);
         addBackPlaneTriangle(x1, y1, x2, y2, z);
+        addCylinderSurfaceTriangles(x2, y2, x1, y1, z);
     }
 }
 
@@ -73,3 +74,20 @@ void CylinderTriangulation::addBackPlaneTriangle(GLfloat x1, GLfloat y1, GLfloat
     appendPoint(n);
 }
 
+void CylinderTriangulation::addCylinderSurfaceTriangles(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat z)
+{
+    QVector3D n = QVector3D::normal(QVector3D(0.0f, 0.0f, -0.1f), QVector3D(x2 - x1, y2 - y1, 0.0f));
+    appendPoint(x1, y1, z);
+    appendPoint(n);
+    appendPoint(x1, y1, -z);
+    appendPoint(n);
+    appendPoint(x2, y2, z);
+    appendPoint(n);
+
+    appendPoint(x2, y2, -z);
+    appendPoint(n);
+    appendPoint(x2, y2, z);
+    appendPoint(n);
+    appendPoint(x1, y1, -z);
+    appendPoint(n);
+}
