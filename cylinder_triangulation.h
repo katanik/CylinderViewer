@@ -23,11 +23,12 @@ public:
     int vertexCount() const;
 
 private:
-    void addTopPlaneTriangle(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat z);
-    void addBackPlaneTriangle(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat z);
-    void addCylinderSurfaceTriangles(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat z);
+    void addTopPlaneTriangle(const QVector2D& firstPoint, const QVector2D& secondPoint, GLfloat z);
+    void addBackPlaneTriangle(const QVector2D& firstPoint, const QVector2D& secondPoint, GLfloat z);
+    void addCylinderSurfaceTriangles(const QVector2D& firstPoint, const QVector2D& secondPoint, GLfloat z);
 
-    void appendPoint(GLfloat x, GLfloat y, GLfloat z);
+    void appendSegmentPoints(GLfloat x, GLfloat y, GLfloat z, const QVector3D& n);
+    void appendSegmentPoints(const QVector2D& xyCoords, GLfloat z, const QVector3D& n);
     void appendPoint(const QVector3D &coordinates);
 
 private:
