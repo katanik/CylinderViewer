@@ -15,23 +15,13 @@ CylinderWidget::~CylinderWidget(){
 
 void CylinderWidget::initShaders()
 {
-    // Compile vertex shader
+    // Compiles vertex shader
     if (!m_program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/vshader.vsh")){
         close();
     }
 
-    // Compile fragment shader
+    // Compiles fragment shader
     if (!m_program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/fshader.fsh")){
-        close();
-    }
-
-    // Link shader pipeline
-    if (!m_program.link()){
-        close();
-    }
-
-    // Bind shader pipeline for use
-    if (!m_program.bind()){
         close();
     }
 }
@@ -48,16 +38,16 @@ void CylinderWidget::initializeGL()
 
 void CylinderWidget::paintGL()
 {
-    // Clear color and depth buffer
+    // Clears color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Enable depth buffer
+    // Enables depth buffer
     glEnable(GL_DEPTH_TEST);
 
-    // Enable back face culling
+    // Enables back face culling
     glEnable(GL_CULL_FACE);
 
-    // Calculate model view transformation
+    // Calculates model view transformation
     QMatrix4x4 transformation;
     transformation.rotate(QQuaternion::fromEulerAngles(m_rotationAngles));
     m_geomEngine->drawCylinderGeometry(m_program, m_projection * transformation, m_cylinderTraits);
@@ -65,29 +55,38 @@ void CylinderWidget::paintGL()
 
 void CylinderWidget::resizeGL(int w, int h)
 {
-    // Calculate aspect ratio
+    // Calculates aspect ratio
     float aspectRatio = static_cast<float>(w) / static_cast<float>(h ? h : 1);
 
-    // Set near plane to 0.01, far plane to 100.0, field of view 45 degrees
+    // Default view parameters
     constexpr float nearPlane = 0.01f, farPlane = 100.0, fov = 45.0;
 
-    // Reset projection
+    // Sets perspective projection
     m_projection.setToIdentity();
-
-    // Set perspective projection
     m_projection.perspective(fov, aspectRatio, nearPlane, farPlane);
 
-    // Move camera position
+    // Moves camera position
     m_projection.translate(0, 0, -1);
 }
 
 void CylinderWidget::mousePressEvent(QMouseEvent *event)
 {
+    // Saves mouse press position
+    m_lastPos = QVector2D(event->position());
 }
 
 void CylinderWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    // Rotation axis is perpendicular to the mouse position difference vector, so
+    // X movement will correspond to rotation around Z axis, and Y movement will correspond to rotation around Y axis
+    QVector2D diff = QVector2D(event->position()) - m_lastPos;
+    if (event->buttons()) {
+        setXRotation(m_rotationAngles.x() + diff.y());
+        setYRotation(m_rotationAngles.y() + diff.x());
+    }
+    m_lastPos = QVector2D(event->position());
 }
+
 static void normalizeAngle(int &angle)
 {
     while (angle < 0){

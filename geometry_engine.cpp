@@ -7,7 +7,7 @@ GeometryEngine::GeometryEngine()
 {
     initializeOpenGLFunctions();
 
-    // Generate VBO
+    // Generates VBO
     m_cylinderBuffer.create();
 
     // Initializes cylinder geometry and transfers it to VBO
@@ -19,13 +19,14 @@ GeometryEngine::~GeometryEngine()
     m_cylinderBuffer.destroy();
 }
 
-void GeometryEngine::setupVertexAttributes(QOpenGLShaderProgram& program){
+void GeometryEngine::setupVertexAttributes(QOpenGLShaderProgram& program)
+{
 
     m_cylinderBuffer.bind();
 
     auto glFunctionsPtr = QOpenGLContext::currentContext()->functions();
 
-    // Tell OpenGL programmable pipeline how to locate vertex position data
+    // Tells pipeline how to locate vertex position data
 
     const int vertexLocation = program.attributeLocation("vertex");
     glFunctionsPtr->glEnableVertexAttribArray(vertexLocation);
@@ -42,7 +43,7 @@ void GeometryEngine::drawCylinderGeometry(QOpenGLShaderProgram& program, const Q
 {
     program.bind();
 
-    // Store the vertex attribute bindings for the program.
+    // Stores the vertex attribute bindings for the program
     setupVertexAttributes(program);
 
     // Setup matrices
@@ -57,13 +58,14 @@ void GeometryEngine::drawCylinderGeometry(QOpenGLShaderProgram& program, const Q
     // Setup light position
     program.setUniformValue(program.uniformLocation("lightPos"), traits.lightPos);
 
-    // Draw cylinder triangulation
+    // Draws cylinder triangulation
     glDrawArrays(GL_TRIANGLES, 0, m_cylinder.vertexCount());
 
     program.release();
 }
 
-void GeometryEngine::initCylinderGeometry(){
+void GeometryEngine::initCylinderGeometry()
+{
     // Setup cylinder triangulation vertex buffer object
     m_cylinderBuffer.create();
     m_cylinderBuffer.bind();
